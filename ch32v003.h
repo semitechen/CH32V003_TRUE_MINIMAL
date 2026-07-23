@@ -6,6 +6,7 @@
 #include "include/exti.h"
 #include "include/pfic.h"
 #include "include/irq.h"
+#include "include/flash.h"
 
 /* Composite helper for EXTI setup */
 #define SETUP_EXTI_PIN(pin, portcode, rise, fall, irqnum) do { \
