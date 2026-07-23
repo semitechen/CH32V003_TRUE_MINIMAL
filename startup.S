@@ -4,24 +4,26 @@
     .globl main
 
 _start:
-    la   sp, _estack
+    lui  sp, %hi(_estack)
+    addi sp, sp, %lo(_estack)
     call main
 1:  j    1b
 
     .section .vector_table, "a", @progbits
     .align 4
     .globl __vectors
-    .globl EXTI7_0_IRQHandler
     .globl Default_Handler
 
 __vectors:
-    .word _start
+    .option push
+    .option norvc
+    j _start
+    .option pop
 
     .rept 19
         .word Default_Handler
     .endr
 
-    .word EXTI7_0_IRQHandler
 
     .rept (32 - 21)
         .word Default_Handler
