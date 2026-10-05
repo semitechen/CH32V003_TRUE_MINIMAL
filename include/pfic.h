@@ -10,9 +10,10 @@
 #define PFIC_DISABLE_IRQ(n) (PFIC_IRER0 |= (1U << (n)))
 
 #define ENABLE_GLOBAL_IRQS() do {                 \
-	__asm__ volatile ("li t0, 0x188");            \
-	__asm__ volatile ("csrw mstatus, t0");        \
-	__asm__ volatile ("li t0, 0x3");              \
-	__asm__ volatile ("csrw mtvec, t0");          \
+	__asm__ volatile (                            \
+		"csrw mstatus, %0\n\t"                    \
+		"csrw mtvec, %1\n\t"                      \
+		:: "r"(0x188), "r"(0x3) : "memory"        \
+	);                                            \
 } while (0)
 
