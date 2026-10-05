@@ -12,6 +12,7 @@ _start:
     .section .vector_table, "a", @progbits
     .align 4
     .globl __vectors
+    .globl EXTI7_0_IRQHandler
     .globl Default_Handler
 
 __vectors:
@@ -24,11 +25,15 @@ __vectors:
         .word Default_Handler
     .endr
 
+    .word EXTI7_0_IRQHandler
 
     .rept (32 - 21)
         .word Default_Handler
     .endr
 
     .section .text.Default_Handler, "ax", @progbits
+    .weak EXTI7_0_IRQHandler
+    .set EXTI7_0_IRQHandler, Default_Handler
+
 Default_Handler:
     j Default_Handler
